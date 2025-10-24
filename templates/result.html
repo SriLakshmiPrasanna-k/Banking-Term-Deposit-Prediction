@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result - Term Deposit</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .result-container {
+            background-color: #ffffff;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .result-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: bounceIn 1s ease-out;
+        }
+
+        .result-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .result-message {
+            font-size: 18px;
+            color: #6c757d;
+            margin-bottom: 30px;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .stats-container {
+            background-color: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            animation: fadeInUp 0.8s ease-out 0.6s both;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .stat-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .stat-label {
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .stat-value {
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .confidence-meter {
+            margin: 25px 0;
+            animation: fadeInUp 0.8s ease-out 0.8s both;
+        }
+
+        .confidence-label {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #495057;
+        }
+
+        .progress {
+            height: 10px;
+            border-radius: 5px;
+            background-color: #e9ecef;
+        }
+
+        .btn-container {
+            margin-top: 30px;
+            animation: fadeInUp 0.8s ease-out 1s both;
+        }
+
+        .btn-primary-custom {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            color: white;
+        }
+
+        .btn-outline-custom {
+            border: 2px solid #667eea;
+            color: #667eea;
+            background: transparent;
+            padding: 10px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+        }
+
+        .btn-outline-custom:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .result-container {
+                margin: 20px;
+                padding: 30px 20px;
+            }
+            .result-title {
+                font-size: 28px;
+            }
+            .result-icon {
+                font-size: 60px;
+            }
+            .btn-container {
+                text-align: center;
+            }
+            .btn-primary-custom, .btn-outline-custom {
+                display: block;
+                margin: 10px 0;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="result-container">
+        {% if p == 1 %}
+            <div class="result-icon text-success">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h1 class="result-title text-success">High Likelihood to Subscribe</h1>
+            <p class="result-message">Based on your profile, you have a strong potential to subscribe to our term deposit!</p>
+
+            <div class="stats-container">
+                <div class="stat-item">
+                    <span class="stat-label">Prediction Confidence:</span>
+                    <span class="stat-value">86.1%</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Model Accuracy:</span>
+                    <span class="stat-value">High</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Recommendation:</span>
+                    <span class="stat-value">Proceed with Offer</span>
+                </div>
+            </div>
+
+            <div class="confidence-meter">
+                <div class="confidence-label">Prediction Confidence Level</div>
+                <div class="progress">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 86.1%" aria-valuenow="86.1" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+        {% else %}
+            <div class="result-icon text-danger">
+                <i class="fas fa-times-circle"></i>
+            </div>
+            <h1 class="result-title text-danger">Low Likelihood to Subscribe</h1>
+            <p class="result-message">Based on your current profile, the likelihood of subscribing to a term deposit is low. Consider the following suggestions:</p>
+
+            <div class="stats-container">
+                <div class="stat-item">
+                    <span class="stat-label">Prediction Confidence:</span>
+                    <span class="stat-value">78.5%</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Model Accuracy:</span>
+                    <span class="stat-value">High</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Recommendation:</span>
+                    <span class="stat-value">Reassess Strategy</span>
+                </div>
+            </div>
+
+            <div class="confidence-meter">
+                <div class="confidence-label">Prediction Confidence Level</div>
+                <div class="progress">
+                    <div class="progress-bar bg-danger" role="progressbar" style="width: 78.5%" aria-valuenow="78.5" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+
+            <div class="alert alert-info" role="alert">
+                <i class="fas fa-lightbulb"></i>
+                <strong>Tips to improve your chances:</strong>
+                <ul class="mb-0 mt-2 text-start">
+                    <li>Increase your account balance</li>
+                    <li>Consider your current loans and housing situation</li>
+                    <li>Review your job stability and income</li>
+                    <li>Contact duration in previous interactions</li>
+                </ul>
+            </div>
+        {% endif %}
+
+        <div class="btn-container">
+            <a href="/" class="btn-primary-custom">
+                <i class="fas fa-redo"></i> Make Another Prediction
+            </a>
+            <a href="#" class="btn-outline-custom" onclick="window.print()">
+                <i class="fas fa-print"></i> Print Results
+            </a>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
